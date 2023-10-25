@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+ <h1>Services Provided</h1>
+    {% if service_list %}
+        <table class="table table-bordered">
+            {% for service in service_list %}
+                <tr class="table-secondary">
+                    <td><a href="{{ service.get_absolute_url }}">{{ service.serv_title }}</a></td>
+                </tr>
+            {% endfor %}
+    {% else %}
+        <p>There are no services</p>
+    {% endif %}
+        </table>
+{% endblock %}
