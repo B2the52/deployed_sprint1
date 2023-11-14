@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Service, Review, RequestContact, UserReview, Invoice
+from .models import Service, Review, RequestContact, UserReview, Invoice, BlogPost
 from django.views import generic
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -16,7 +16,7 @@ def index(request):
     context = {
         'num_services': num_services
     }
-    return render(request, 'index.html', context=context)
+    return render(request, 'LawnCare/index.html', context=context)
 
 
 class ServiceListView(generic.ListView):
@@ -51,3 +51,26 @@ class ServiceCreate(CreateView):
         post = form.save(commit=False)
         post.save()
         return HttpResponseRedirect(reverse('service_list'))
+
+
+class ReviewCreate(CreateView):
+    model = Review
+    fields = ['rev_rating', 'rev_comments', 'serv_id']
+
+
+class BlogCreate(CreateView):
+    model = BlogPost
+    fields = ['Blog_title', 'Blog_text']
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.save()
+        return HttpResponseRedirect(reverse('blog'))
+
+
+class BlogDetailView(generic.DetailView):
+    model = BlogPost
+
+
+class BlogListView(generic.ListView):
+    model = BlogPost
